@@ -1,5 +1,6 @@
-package isimg.sockets.isimgo_backend.CRUD.security.config;
+package isimg.sockets.isimgo_backend.CRUD.security.config.config;
 
+import isimg.sockets.isimgo_backend.CRUD.security.config.config.JwtAuthFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,7 +16,6 @@ import org.springframework.security.web.authentication.logout.LogoutHandler;
 
 import static isimg.sockets.isimgo_backend.CRUD.user.Role.ADMIN;
 import static isimg.sockets.isimgo_backend.CRUD.user.Role.USER;
-import static org.springframework.http.HttpMethod.*;
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
 @Configuration
@@ -25,6 +25,7 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 
 public class SecurityConfiguration {
     private final AuthenticationProvider authenticationProvider;
+    private final JwtAuthFilter jwtAuthFilter;
     private final LogoutHandler logoutHandler;
     private static final String[] WHITE_LIST_URL = {"/api/v1/auth/**",
             "/v2/api-docs",
@@ -44,13 +45,15 @@ public class SecurityConfiguration {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(req ->
                         req.requestMatchers(WHITE_LIST_URL)
-                                .permitAll()
+                                .permitAll()  //autoriser les reqtes de white list
                                 .requestMatchers("/api/**").hasAnyRole(ADMIN.name(), USER.name())
-                                     .anyRequest()
+                                     .anyRequest() //another request should be autneticated
                                 .authenticated()
                 )
-                .sessionManagement(session -> session.sessionCreationPolicy(STATELESS))
+                .sessionManagement(session -> session.sessionCreationPolicy(STATELESS)) // spring create new session for each request
+               //auth provider
                 .authenticationProvider(authenticationProvider)
+                .addFilterBefore(jwtAuthFilter,UsernamePasswordAuthenticationFilter.class)
                 .logout(logout ->
                         logout.logoutUrl("/api/v1/auth/logout")
                                 .addLogoutHandler(logoutHandler)

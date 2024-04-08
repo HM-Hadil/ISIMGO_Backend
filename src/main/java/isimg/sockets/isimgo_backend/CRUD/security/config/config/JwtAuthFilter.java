@@ -1,4 +1,4 @@
-package isimg.sockets.isimgo_backend.CRUD.security.config;
+package isimg.sockets.isimgo_backend.CRUD.security.config.config;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

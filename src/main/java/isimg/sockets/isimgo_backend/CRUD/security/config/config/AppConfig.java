@@ -1,4 +1,4 @@
-package isimg.sockets.isimgo_backend.CRUD.security.config;
+package isimg.sockets.isimgo_backend.CRUD.security.config.config;
 
 import isimg.sockets.isimgo_backend.CRUD.user.repo.UserRepo;
 import lombok.RequiredArgsConstructor;
@@ -28,9 +28,12 @@ public class AppConfig {
     }
 
     @Bean
+    // the auth provider data access object which is responsable to fetch user details & encode password
     public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+        //getting informations from the data base
         authProvider.setUserDetailsService(userDetailsService());
+        //encoder password
         authProvider.setPasswordEncoder(passwordEncoder());
         return authProvider;
     }
