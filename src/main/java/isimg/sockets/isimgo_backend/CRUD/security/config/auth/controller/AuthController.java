@@ -13,12 +13,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("api/auth")
+//automatically generates a constructor that initializes all final fields.
 @RequiredArgsConstructor
 public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/register")
-    public ResponseEntity<AuthenticationResponse> register(@RequestBody RegisterRequest req){
+    public ResponseEntity<AuthenticationResponse> register(@RequestBody RegisterRequest req)  {
         return ResponseEntity.ok(authService.register(req));
 
     }

@@ -1,5 +1,7 @@
-package isimg.sockets.isimgo_backend.CRUD.user;
+package isimg.sockets.isimgo_backend.CRUD.user.entity;
 
+import isimg.sockets.isimgo_backend.CRUD.user.core.EntityWithSelfAssignedId;
+import isimg.sockets.isimgo_backend.CRUD.user.enums.Role;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,6 +13,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.UUID;
 
 @Data
 @AllArgsConstructor
@@ -18,11 +21,11 @@ import java.util.List;
 @Builder
 @Entity
 @Table(name = "_user")
-public class User implements UserDetails {
+public class User implements UserDetails  {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
-    private String firstanme;
+    private Long id;
+    private String firstname;
     private String lastname;
     private String email;
     private String password;

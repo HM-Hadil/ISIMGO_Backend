@@ -1,18 +1,19 @@
 package isimg.sockets.isimgo_backend.CRUD.security.config.auth.service;
 
-import io.jsonwebtoken.Jwt;
+import isimg.sockets.isimgo_backend.CRUD.user.exceptions.EmailAlreadyExistsException;
 import isimg.sockets.isimgo_backend.CRUD.security.config.auth.request.AuthenticationRequest;
 import isimg.sockets.isimgo_backend.CRUD.security.config.auth.request.RegisterRequest;
 import isimg.sockets.isimgo_backend.CRUD.security.config.auth.response.AuthenticationResponse;
 import isimg.sockets.isimgo_backend.CRUD.security.config.config.JwtService;
-import isimg.sockets.isimgo_backend.CRUD.user.Role;
-import isimg.sockets.isimgo_backend.CRUD.user.User;
+import isimg.sockets.isimgo_backend.CRUD.user.enums.Role;
+import isimg.sockets.isimgo_backend.CRUD.user.entity.User;
 import isimg.sockets.isimgo_backend.CRUD.user.repo.UserRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
 
 @Service
 @RequiredArgsConstructor
@@ -22,14 +23,18 @@ public class AuthService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
     public AuthenticationResponse register(RegisterRequest req) {
+        if (userRepo.existsByEmail(req.getEmail())) {
+            throw new EmailAlreadyExistsException("Email already exists!");
+        }
         var user = User.builder()
-                .firstanme(req.getFirstanme())
+                .firstname(req.getFirstname())
                 .lastname(req.getLastname())
                 .email(req.getEmail())
                 .password(passwordEncoder.encode(req.getPassword()))
                 .resume(req.getResume())
                 .role(Role.USER)
                 .build();
+
         userRepo.save(user);
         var jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder()
