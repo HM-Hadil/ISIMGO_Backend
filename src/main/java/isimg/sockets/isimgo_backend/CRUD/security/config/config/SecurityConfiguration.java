@@ -26,8 +26,8 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 public class SecurityConfiguration {
     private final AuthenticationProvider authenticationProvider;
     private final JwtAuthFilter jwtAuthFilter;
-    private final LogoutHandler logoutHandler;
-    private static final String[] WHITE_LIST_URL = {"/api/v1/auth/**",
+
+    private static final String[] WHITE_LIST_URL = {"/api/auth/**",
             "/v2/api-docs",
             "/v3/api-docs",
             "/v3/api-docs/**",
@@ -54,11 +54,7 @@ public class SecurityConfiguration {
                //auth provider
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtAuthFilter,UsernamePasswordAuthenticationFilter.class)
-                .logout(logout ->
-                        logout.logoutUrl("/api/v1/auth/logout")
-                                .addLogoutHandler(logoutHandler)
-                                .logoutSuccessHandler((request, response, authentication) -> SecurityContextHolder.clearContext())
-                )
+
         ;
         return http.build();
     }

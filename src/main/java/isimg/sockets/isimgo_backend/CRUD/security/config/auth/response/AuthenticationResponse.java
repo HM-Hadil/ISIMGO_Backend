@@ -1,4 +1,4 @@
-package isimg.sockets.isimgo_backend.CRUD.security.config.auth;
+package isimg.sockets.isimgo_backend.CRUD.security.config.auth.response;
 
 import lombok.*;
 

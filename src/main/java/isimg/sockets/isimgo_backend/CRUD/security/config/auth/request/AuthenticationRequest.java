@@ -1,4 +1,4 @@
-package isimg.sockets.isimgo_backend.CRUD.security.config.auth;
+package isimg.sockets.isimgo_backend.CRUD.security.config.auth.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,9 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class RegisterRequest {
-    private String firstanme;
-    private String lastname;
+public class AuthenticationRequest {
     private String email;
     private String password;
 }
