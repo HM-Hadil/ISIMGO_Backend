@@ -10,5 +10,7 @@ import java.util.List;
 public interface InvRepo extends JpaRepository<Invitation,Long> {
 
     List<Invitation> findByReceiverIdAndStatus(Long receiver, InvitationStatus status);
+    List<Invitation> findBySenderIdAndStatus(Long sender, InvitationStatus status);
+
 
 }

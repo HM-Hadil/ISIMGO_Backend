@@ -16,8 +16,8 @@ import lombok.extern.jackson.Jacksonized;
 @ToString
 public class InvResult {
     private Long id;
-    private User sender;
-    private User reciever;
+    private UserResult sender;
+    private UserResult reciever;
     private InvitationStatus status;
 
 }

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 @Component
 public class InvMapper {
+    private final UserMapper userMapper;
 
     public InvResult entityToInv(Invitation invitation){
         if (invitation == null) {
@@ -15,8 +16,8 @@ public class InvMapper {
         }
         return InvResult.builder()
                 .withId(invitation.getId())
-                .withReciever(invitation.getReceiver())
-                .withSender(invitation.getSender())
+                .withReciever(userMapper.entityToUser(invitation.getReceiver()))
+                .withSender(userMapper.entityToUser(invitation.getSender()))
                 .withStatus(invitation.getStatus())
                 .build();
     }
