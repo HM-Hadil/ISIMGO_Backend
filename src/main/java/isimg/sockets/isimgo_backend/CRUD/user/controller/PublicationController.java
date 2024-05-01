@@ -23,7 +23,7 @@ public class PublicationController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<Publications> createPublication(@RequestParam Long userId, @RequestParam String content) {
+    public ResponseEntity<Publications> createPublication(@RequestBody Long userId, @RequestBody String content) {
         Publications createdPublication = publicationService.createPublication(userId, content);
         return new ResponseEntity<>(createdPublication, HttpStatus.CREATED);
     }

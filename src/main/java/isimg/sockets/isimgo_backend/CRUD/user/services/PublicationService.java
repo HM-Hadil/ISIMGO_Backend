@@ -21,7 +21,7 @@ public class PublicationService {
     public Publications createPublication(Long userId, String content) {
         // Find the user by userId
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new UserNotFoundException("User not found with id: " ));
+                .orElseThrow(() -> new UserNotFoundException(userId ));
 
         // Create a new publication
         Publications publication = new Publications();
