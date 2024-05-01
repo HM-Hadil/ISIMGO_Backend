@@ -31,8 +31,11 @@ public class User implements UserDetails  {
     private String email;
     private String password;
     private String resume;
+    private Boolean isFriend=false;
     @OneToMany
     private List<Invitation> invitations = new ArrayList<>();
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Publications> publications;
     @Enumerated(EnumType.STRING)
     private Role role;
 

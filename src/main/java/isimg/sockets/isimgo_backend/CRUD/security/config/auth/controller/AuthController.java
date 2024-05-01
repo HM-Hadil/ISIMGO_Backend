@@ -6,13 +6,12 @@ import isimg.sockets.isimgo_backend.CRUD.security.config.auth.request.RegisterRe
 import isimg.sockets.isimgo_backend.CRUD.security.config.auth.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("api/auth")
+@CrossOrigin(origins = "http://localhost:4200")
+
 //automatically generates a constructor that initializes all final fields.
 @RequiredArgsConstructor
 public class AuthController {

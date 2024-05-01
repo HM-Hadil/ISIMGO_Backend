@@ -8,7 +8,9 @@ import isimg.sockets.isimgo_backend.CRUD.security.config.config.JwtService;
 import isimg.sockets.isimgo_backend.CRUD.user.enums.Role;
 import isimg.sockets.isimgo_backend.CRUD.user.entity.User;
 import isimg.sockets.isimgo_backend.CRUD.user.repo.UserRepo;
+import isimg.sockets.isimgo_backend.CRUD.user.services.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -22,6 +24,9 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
+    private final UserService userService;
+
+
     public AuthenticationResponse register(RegisterRequest req) {
         if (userRepo.existsByEmail(req.getEmail())) {
             throw new EmailAlreadyExistsException("Email already exists!");
@@ -37,6 +42,8 @@ public class AuthService {
 
         userRepo.save(user);
         var jwtToken = jwtService.generateToken(user);
+        // After registering the user, associate user details with WebSocket session
+
         return AuthenticationResponse.builder()
                 .token(jwtToken)
                 .build();

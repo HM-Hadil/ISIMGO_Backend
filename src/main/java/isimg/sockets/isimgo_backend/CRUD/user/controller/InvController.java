@@ -15,6 +15,7 @@ import java.util.List;
 @RestController
 @Slf4j
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("api/inv")
 public class InvController {
     private final InvService invService;
