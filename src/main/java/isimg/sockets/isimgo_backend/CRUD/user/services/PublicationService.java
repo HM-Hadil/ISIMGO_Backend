@@ -3,8 +3,11 @@ package isimg.sockets.isimgo_backend.CRUD.user.services;
 import isimg.sockets.isimgo_backend.CRUD.user.entity.Publications;
 import isimg.sockets.isimgo_backend.CRUD.user.entity.User;
 import isimg.sockets.isimgo_backend.CRUD.user.exceptions.UserNotFoundException;
+import isimg.sockets.isimgo_backend.CRUD.user.mapper.PubMapper;
 import isimg.sockets.isimgo_backend.CRUD.user.repo.PublicationRepo;
 import isimg.sockets.isimgo_backend.CRUD.user.repo.UserRepo;
+import isimg.sockets.isimgo_backend.CRUD.user.request.PublicationRequest;
+import isimg.sockets.isimgo_backend.CRUD.user.result.PubResult;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,25 +19,28 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PublicationService {
     private final UserRepo userRepository;
+    private final PubMapper pubMapper;
     private final PublicationRepo publicationRepo;
 
-    public Publications createPublication(Long userId, String content) {
+    public PubResult createPublication(PublicationRequest req) {
         // Find the user by userId
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new UserNotFoundException(userId ));
+        User user = userRepository.findById(req.getUserId())
+                .orElseThrow(() -> new UserNotFoundException(req.getUserId() ));
 
-        // Create a new publication
-        Publications publication = new Publications();
-        publication.setContent(content);
-        publication.setCreatedAt(LocalDateTime.now());
-        publication.setUser(user);
+        var pub = Publications.builder()
+                .id(req.getId())
+                .content(req.getContent())
+                .user(user)
+                .createdAt(LocalDateTime.now())
+                .build();
 
-        // Save the publication
-        return publicationRepo.save(publication);
+
+        // Save the puserublication
+        return pubMapper.entityToPub(publicationRepo.save(pub));
     }
 
     public List<Publications> getAllPublicationsByUserId(Long userId) {
         // Find publications by user id
-        return publicationRepo.findAllById(Collections.singleton(userId));
+        return publicationRepo.findPublicationsByUserId(userId);
     }
 }

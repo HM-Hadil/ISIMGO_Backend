@@ -19,4 +19,6 @@ public class UserResult {
     private String resume;
 
     private Role role;
+
+
 }

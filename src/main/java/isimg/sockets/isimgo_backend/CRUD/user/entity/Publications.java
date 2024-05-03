@@ -1,7 +1,9 @@
 package isimg.sockets.isimgo_backend.CRUD.user.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -9,6 +11,7 @@ import java.time.LocalDateTime;
 
     @Entity
     @Data
+    @Builder
     @AllArgsConstructor
     @NoArgsConstructor
     public class Publications {
@@ -25,10 +28,10 @@ import java.time.LocalDateTime;
 
         @ManyToOne
         @JoinColumn(name = "user_id", nullable = false)
+        @JsonBackReference
+
         private User user;
 
-        // Getters and setters
 
-        // Constructors
 
 }

@@ -1,5 +1,6 @@
 package isimg.sockets.isimgo_backend.CRUD.user.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import isimg.sockets.isimgo_backend.CRUD.user.core.EntityWithSelfAssignedId;
 import isimg.sockets.isimgo_backend.CRUD.user.enums.Role;
 import jakarta.persistence.*;
@@ -34,7 +35,10 @@ public class User implements UserDetails  {
     private Boolean isFriend=false;
     @OneToMany
     private List<Invitation> invitations = new ArrayList<>();
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonManagedReference
+
     private List<Publications> publications;
     @Enumerated(EnumType.STRING)
     private Role role;
