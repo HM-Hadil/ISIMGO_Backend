@@ -11,7 +11,7 @@ import java.util.Date;
 @Builder(setterPrefix = "with")
 @Getter
 @Setter
-@Jacksonized
+
 @ToString
 public class PubResult {
     private Long id;

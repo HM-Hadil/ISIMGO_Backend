@@ -45,13 +45,7 @@ public class InvService {
         Invitation invitation = invRepo.findById(invitationId)
                 .orElseThrow(() -> new InvitationNotFoundException(invitationId));
         invitation.setStatus(InvitationStatus.ACCEPTED);
-        invitation.setReceiver(User.builder()
-                        .isFriend(true)
-                .build());
-        invitation.setSender(User.builder()
-                        .isFriend(true)
-                .build());
-      return  invRepo.save(invitation);
+              return  invRepo.save(invitation);
     }
 
     //get the list of invitations by reciever and wehere status is sent

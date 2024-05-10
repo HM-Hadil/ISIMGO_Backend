@@ -37,6 +37,7 @@ public class AuthService {
                 .email(req.getEmail())
                 .password(passwordEncoder.encode(req.getPassword()))
                 .resume(req.getResume())
+                .isFriend(false)
                 .role(Role.USER)
                 .build();
 
